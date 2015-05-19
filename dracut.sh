@@ -1517,7 +1517,13 @@ if [[ $kernel_only != yes ]]; then
         line=($line)
         [ -z "${line[3]}" ] && line[3]="defaults"
         [ -z "${line[4]}" ] && line[4]="0"
-        [ -z "${line[5]}" ] && line[5]="2"
+        [ -z "${line[5]}" ] && {
+        if strstr "${line[2]}" "nfs" ; then
+                line[5]="0"
+        else
+                line[5]="2"
+        fi
+}
         echo "${line[@]}" >> "${initdir}/etc/fstab"
     done
 
