@@ -16,7 +16,8 @@ install() {
     local _d
 
     inst_multiple mount mknod mkdir sleep chroot chown \
-        sed ls flock cp mv dmesg rm ln rmmod mkfifo umount readlink setsid
+        sed ls flock cp mv dmesg rm ln rmmod mkfifo umount readlink setsid \
+        wc
     inst $(command -v modprobe) /sbin/modprobe
 
     inst_multiple -o findmnt less kmod
