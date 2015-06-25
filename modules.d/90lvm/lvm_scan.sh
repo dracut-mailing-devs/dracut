@@ -106,7 +106,7 @@ if [ -n "$LVS" ] ; then
     info "Scanning devices $lvmdevs for LVM logical volumes $LVS"
     lvm lvscan --ignorelockingfailure 2>&1 | vinfo
     for LV in $LVS; do
-        if [ "x$(lvm lvs --noheadings --select "lv_attr =~ k" $LV | wc -l)" = "x0" ]; then
+        if [ "x$(lvm lvs --noheadings --select "lv_attr =~ k" $LV | wc -l)" != "x0" ]; then
             info "Skipping activation of '$LV' because activationskip is set."
             continue
         fi
