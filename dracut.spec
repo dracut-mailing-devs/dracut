@@ -314,8 +314,10 @@ rm -rf -- $RPM_BUILD_ROOT
 %dir %{dracutlibdir}
 %dir %{dracutlibdir}/modules.d
 %{dracutlibdir}/dracut-functions.sh
+%{dracutlibdir}/dracut-export-functions.sh
 %{dracutlibdir}/dracut-init.sh
 %{dracutlibdir}/dracut-functions
+%{dracutlibdir}/dracut-export-functions
 %{dracutlibdir}/dracut-version.sh
 %{dracutlibdir}/dracut-logger.sh
 %{dracutlibdir}/dracut-initramfs-restore

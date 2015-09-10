@@ -120,8 +120,10 @@ install: all
 	mkdir -p $(DESTDIR)$(pkglibdir)/dracut.conf.d
 	install -m 0755 dracut-init.sh $(DESTDIR)$(pkglibdir)/dracut-init.sh
 	install -m 0755 dracut-functions.sh $(DESTDIR)$(pkglibdir)/dracut-functions.sh
+	install -m 0755 dracut-export-functions.sh $(DESTDIR)$(pkglibdir)/dracut-export-functions.sh
 	install -m 0755 dracut-version.sh $(DESTDIR)$(pkglibdir)/dracut-version.sh
 	ln -fs dracut-functions.sh $(DESTDIR)$(pkglibdir)/dracut-functions
+	ln -fs dracut-export-functions.sh $(DESTDIR)$(pkglibdir)/dracut-export-functions
 	install -m 0755 dracut-logger.sh $(DESTDIR)$(pkglibdir)/dracut-logger.sh
 	install -m 0755 dracut-initramfs-restore.sh $(DESTDIR)$(pkglibdir)/dracut-initramfs-restore
 	cp -arx modules.d $(DESTDIR)$(pkglibdir)
