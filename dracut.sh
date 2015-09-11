@@ -207,6 +207,7 @@ Creates initial ramdisk images for preloading modules
                         kernel combined
   --uefi-stub [FILE]    Use the UEFI stub [FILE] to create an UEFI executable
   --kernel-image [FILE] location of the kernel image
+  --i18n_install_all [yes|no] Force to install all i18n stuff or not
 
 If [LIST] has multiple arguments, then you have to put these in quotes.
 
@@ -362,6 +363,7 @@ rearrange_params()
         --long uefi \
         --long uefi-stub: \
         --long kernel-image: \
+        --long i18n_install_all: \
         -- "$@")
 
     if (( $? != 0 )); then
@@ -552,6 +554,8 @@ while :; do
                        uefi_stub_l="$2";               PARMS_TO_STORE+=" '$2'"; shift;;
         --kernel-image)
                        kernel_image_l="$2";            PARMS_TO_STORE+=" '$2'"; shift;;
+        --i18n_install_all)
+                       i18n_install_all_l="$2";        PARMS_TO_STORE+=" '$2'"; shift;;
         --) shift; break;;
 
         *)  # should not even reach this point
@@ -736,6 +740,7 @@ stdloglvl=$((stdloglvl + verbosity_mod_l))
 [[ $loginstall_l ]] && loginstall="$loginstall_l"
 [[ $uefi_stub_l ]] && uefi_stub="$uefi_stub_l"
 [[ $kernel_image_l ]] && kernel_image="$kernel_image_l"
+[[ $i18n_install_all_l ]] && i18n_install_all="$i18n_install_all_l"
 
 # eliminate IFS hackery when messing with fw_dir
 fw_dir=${fw_dir//:/ }
