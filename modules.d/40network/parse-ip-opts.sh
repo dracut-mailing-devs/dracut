@@ -22,16 +22,23 @@ fi
 # Count ip= lines to decide whether we need bootdev= or not
 if [ -z "$NEEDBOOTDEV" ] ; then
     count=0
+    has_dhcp=0
     for p in $(getargs ip=); do
-        case "$p" in
+        ip_to_var $p
+        case "$autoconf" in
             ibft)
+                continue;;
+            dhcp|dhcp6|on|any)
+                # Regard multiple dhcp cases as one to avoid die
+                has_dhcp=1
                 continue;;
         esac
         count=$(( $count + 1 ))
     done
+    count=$(( $count + $has_dhcp ))
     [ $count -gt 1 ] && NEEDBOOTDEV=1
 fi
-unset count
+unset count has_dhcp
 
 # If needed, check if bootdev= contains anything usable
 BOOTDEV=$(getarg bootdev=)
