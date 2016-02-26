@@ -120,6 +120,7 @@ Creates initial ramdisk images for preloading modules
   --nolvmconf           Do not include local /etc/lvm/lvm.conf
   --fscks [LIST]        Add a space-separated list of fsck helpers.
   --nofscks             Inhibit installation of any fsck helpers.
+  --nowdt		Inhibit installation of module for any active watchdog
   --ro-mnt              Mount / and /usr read-only by default.
   -h, --help            This message
   --debug               Output debug information of the build process
@@ -304,6 +305,7 @@ rearrange_params()
         --long device: \
         --long add-device: \
         --long nofscks: \
+        --long nowdt: \
         --long ro-mnt \
         --long kmoddir: \
         --long conf: \
@@ -478,6 +480,7 @@ while :; do
         --add-device|--device) add_device_l+=("$2");          PARMS_TO_STORE+=" '$2'"; shift;;
         --kernel-cmdline) kernel_cmdline_l+=("$2");           PARMS_TO_STORE+=" '$2'"; shift;;
         --nofscks)     nofscks_l="yes";;
+        --nowdt)       nowdt_l="yes";;
         --ro-mnt)      ro_mnt_l="yes";;
         -k|--kmoddir)  drivers_dir_l="$2";             PARMS_TO_STORE+=" '$2'"; shift;;
         -c|--conf)     conffile="$2";                  PARMS_TO_STORE+=" '$2'"; shift;;
@@ -740,6 +743,7 @@ stdloglvl=$((stdloglvl + verbosity_mod_l))
 [[ $compress_l ]] && compress=$compress_l
 [[ $show_modules_l ]] && show_modules=$show_modules_l
 [[ $nofscks_l ]] && nofscks="yes"
+[[ $nowdt_l ]] && nowdt="yes"
 [[ $ro_mnt_l ]] && ro_mnt="yes"
 [[ $early_microcode_l ]] && early_microcode=$early_microcode_l
 [[ $early_microcode ]] || early_microcode=no
@@ -1276,7 +1280,7 @@ export initdir dracutbasedir \
     mods_to_load \
     fw_dir drivers_dir debug no_kernel kernel_only \
     omit_drivers mdadmconf lvmconf root_dev \
-    use_fstab fstab_lines libdirs fscks nofscks ro_mnt \
+    use_fstab fstab_lines libdirs fscks nofscks nowdt ro_mnt \
     stdloglvl sysloglvl fileloglvl kmsgloglvl logfile \
     debug host_fs_types host_devs swap_devs sshkey add_fstab \
     DRACUT_VERSION udevdir prefix filesystems drivers \
