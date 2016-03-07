@@ -32,3 +32,33 @@ install() {
     inst_multiple -o wdctl
 }
 
+installkernel() {
+    cd /sys/class/watchdog
+    for dir in */; do
+	    cd $dir
+	    active=`[ -f state ] && cat state`
+	    if ! [[ $hostonly ]] || [[ "$active" =  "active" ]]; then
+		    # device/modalias will return driver of this device
+		    wdtdrv=`cat device/modalias`
+		    # There can be more than one module represented by same
+		    # modalias. Currently load all of them.
+		    # TODO: Need to find a way to avoid any unwanted module
+		    # represented by modalias
+		    wdtdrv=`modprobe -R $wdtdrv | tr "\n" "," | sed 's/.$//'`
+		    instmods $wdtdrv
+		    # however in some cases, we also need to check that if
+		    # there is a specific driver for the parent bus/device.
+		    # In such cases we also need to enable driver for parent
+		    # bus/device.
+		    wdtppath="device/..";
+		    while [ -f "$wdtppath/modalias" ]
+		    do
+			    wdtpdrv=`cat $wdtppath/modalias`
+			    wdtpdrv=`modprobe -R $wdtpdrv | tr "\n" "," | sed 's/.$//'`
+			    instmods $wdtpdrv
+			    wdtppath="$wdtppath/.."
+		    done
+	    fi
+	    cd ..
+    done
+}
