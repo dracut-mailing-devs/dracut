@@ -44,7 +44,25 @@ installkernel() {
                 dracut_instmods -o -P ".*/(kernel/fs/nfs|kernel/fs/nfsd|kernel/fs/lockd)/.*" '=fs'
             fi
         else
-            hostonly='' instmods "${host_fs_types[@]}"
+            for i in "${host_fs_types[@]}"; do
+                if [[ $i = nfs ]]; then
+                    # nfs manpage says:
+                    # "The fstype field contains "nfs". Use of the "nfs4" fstype in
+                    # /etc/fstab is deprecated."
+                    #
+                    # It means "nfs" can be actually mounted as "nfs4", so for "nfs"
+                    # host fstype we better install all the possible kernel modules,
+                    # this is useful for kdump "nfs" dumping not mounted beforehand.
+                    #
+                    # The list is copied from "95nfs/module_setup.sh installkernel()".
+                    i="nfs sunrpc ipv6 nfsv2 nfsv3 nfsv4 nfs_acl nfs_layout_nfsv41_files"
+                elif [[ $i = nfs[3-4] ]]; then
+                    # Deprecated cases, we provide support, but need a name mapping:
+                    # For example, should map "nfs4" to use "nfsv4.ko" not "nfs4.ko".
+                    i=${i/nfs/nfsv}
+                fi
+                hostonly='' instmods $i
+            done
         fi
     fi
     :
