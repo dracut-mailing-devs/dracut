@@ -2,7 +2,7 @@
 
 SECURITYFSDIR="/sys/kernel/security"
 IMASECDIR="${SECURITYFSDIR}/ima"
-IMACONFIG="${NEWROOT}/etc/sysconfig/ima"
+IMACONFIG="${NEWROOT}/etc/ima/ima"
 
 load_x509_keys()
 {

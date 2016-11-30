@@ -33,10 +33,10 @@ line.
 
 # Save the policy in a file.
 
-# Create the configuration file '/etc/sysconfig/ima' to override the path name of
+# Create the configuration file '/etc/ima/ima' to override the path name of
 # the IMA custom policy.
-------------- '/etc/sysconfig/ima' (with the default value) -------------
-IMAPOLICY="/etc/sysconfig/ima-policy"
+------------- '/etc/ima/ima' (with the default value) -------------
+IMAPOLICY="/etc/ima/ima-policy"
 -------------------------------------------------------------------------
 
 
@@ -64,5 +64,5 @@ IMAPOLICY="/etc/sysconfig/ima-policy"
 
 # 98integrity/ima-keys-load.sh script loads the signed certificates stored 
 # in the $IMAKEYSDIR onto the trusted IMA keyring.  The default $IMAKEYSDIR
-# directory is /etc/keys/ima, but can be specified in the /etc/sysconfig/ima
+# directory is /etc/keys/ima, but can be specified in the /etc/ima/ima
 # policy.
