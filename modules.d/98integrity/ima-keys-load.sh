@@ -2,7 +2,10 @@
 
 SECURITYFSDIR="/sys/kernel/security"
 IMASECDIR="${SECURITYFSDIR}/ima"
-IMACONFIG="${NEWROOT}/etc/sysconfig/ima"
+IMACONFIG="${NEWROOT}/etc/ima/ima"
+
+# for backwards compatibility
+IMACONFIG_OLD="${NEWROOT}/etc/sysconfig/ima"
 
 load_x509_keys()
 {
@@ -11,6 +14,8 @@ load_x509_keys()
     # override the default configuration
     if [ -f "${IMACONFIG}" ]; then
         . ${IMACONFIG}
+    elif [ -f "${IMACONFIG_OLD}" ]; then
+        . ${IMACONFIG_OLD}
     fi
 
     if [ -z "${IMAKEYDIR}" ]; then
