@@ -30,6 +30,9 @@ installkernel() {
                 "=drivers/clk" \
                 "=drivers/dma" \
                 "=drivers/i2c/busses" \
+                "=drivers/mfd" \
+                "=drivers/mmc/core" \
+                "=drivers/mmc/host" \
                 "=drivers/phy" \
                 "=drivers/power" \
                 "=drivers/regulator" \
