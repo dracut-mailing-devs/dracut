@@ -78,6 +78,9 @@ install() {
         }
     }
 
+    # Include multipath configuration files from path specified with config_dir
+    config_dir=`/usr/sbin/multipath -t|grep -i config_dir|awk '{print $2}'|sed -e 's/^"//' -e 's/"$//'`/*
+
     inst_multiple -o  \
         dmsetup \
         kpartx \
@@ -90,7 +93,7 @@ install() {
         /etc/xdrdevices.conf \
         /etc/multipath.conf \
         /etc/multipath/* \
-        /etc/multipath/conf.d/*
+        $config_dir
 
     [[ $hostonly ]] && [[ $hostonly_mode = "strict" ]] && {
         for_each_host_dev_and_slaves_all add_hostonly_mpath_conf
